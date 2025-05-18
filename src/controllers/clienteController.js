@@ -1,20 +1,19 @@
 // src/controllers/clientesController.js
-const Cliente = require('../models/cliente.model');
+import Cliente from '../models/cliente.model.js';
 
 // Obtener todos los clientes
-const obtenerClientes = async (req, res) => {
+export const obtenerClientes = async (req, res) => {
   try {
     const clientes = await Cliente.findAll();
-    return res.status(200).json(clientes); // ✅ esta línea es suficiente
+    return res.status(200).json(clientes);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error al obtener los clientes' });
   }
 };
 
-
 // Crear un nuevo cliente
-const crearCliente = async (req, res) => {
+export const crearCliente = async (req, res) => {
   try {
     const { nombre, correo, telefono, cedula, direccion } = req.body;
     const nuevoCliente = await Cliente.create({
@@ -32,7 +31,7 @@ const crearCliente = async (req, res) => {
 };
 
 // Obtener un cliente por su ID
-const obtenerClientePorId = async (req, res) => {
+export const obtenerClientePorId = async (req, res) => {
   try {
     const { id } = req.params;
     const cliente = await Cliente.findByPk(id);
@@ -47,7 +46,7 @@ const obtenerClientePorId = async (req, res) => {
 };
 
 // Actualizar un cliente
-const actualizarCliente = async (req, res) => {
+export const actualizarCliente = async (req, res) => {
   try {
     const { id } = req.params;
     const { nombre, correo, telefono, cedula, direccion } = req.body;
@@ -73,7 +72,7 @@ const actualizarCliente = async (req, res) => {
 };
 
 // Eliminar un cliente
-const eliminarCliente = async (req, res) => {
+export const eliminarCliente = async (req, res) => {
   try {
     const { id } = req.params;
     const cliente = await Cliente.findByPk(id);
@@ -87,12 +86,4 @@ const eliminarCliente = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Error al eliminar el cliente' });
   }
-};
-
-module.exports = {
-  crearCliente,
-  obtenerClientes,
-  obtenerClientePorId,
-  actualizarCliente,
-  eliminarCliente,
 };
